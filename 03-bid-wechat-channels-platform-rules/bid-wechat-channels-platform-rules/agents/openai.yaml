@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "BID 微信视频号规则"
+  short_description: "查询视频号视频、图片、直播与微信生态合规规则"
+  default_prompt: "Use $bid-wechat-channels-platform-rules to audit my WeChat Channels video, cover, image post, live asset, and compliance risks."
+
+policy:
+  allow_implicit_invocation: true

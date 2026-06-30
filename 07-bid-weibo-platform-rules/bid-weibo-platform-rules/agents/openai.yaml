@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "BID 微博平台规则"
+  short_description: "查询微博图文、视频、长文、话题与合规规则"
+  default_prompt: "Use $bid-weibo-platform-rules to audit my Weibo post, images, video, long-post cover, hashtags, and compliance risks."
+
+policy:
+  allow_implicit_invocation: true

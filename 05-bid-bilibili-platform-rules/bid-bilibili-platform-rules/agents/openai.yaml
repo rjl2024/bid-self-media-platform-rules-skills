@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "BID B站平台规则"
+  short_description: "查询B站视频、封面、标题、标签与内容合规规则"
+  default_prompt: "Use $bid-bilibili-platform-rules to audit my Bilibili video, cover, title, tags, description, and compliance risks."
+
+policy:
+  allow_implicit_invocation: true

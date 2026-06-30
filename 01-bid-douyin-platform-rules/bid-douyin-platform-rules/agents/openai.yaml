@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "BID 抖音平台规则"
+  short_description: "查询抖音视频、图文、直播与AIGC发布规格"
+  default_prompt: "Use $bid-douyin-platform-rules to check whether my Douyin video, image-text post, article, or live-stream asset meets current platform rules."
+
+policy:
+  allow_implicit_invocation: true
