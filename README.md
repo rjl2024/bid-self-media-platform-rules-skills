@@ -1,6 +1,6 @@
 ﻿# BID 自媒体平台规则 Skills
 
-这是一个面向 Codex 的国内主流自媒体平台规则 Skill 交付包，覆盖抖音、小红书、微信视频号、微信公众号、B站、快手、微博。
+这是一个面向 Codex 的国内主流自媒体平台规则 Skill 交付包，覆盖抖音、小红书、微信视频号、微信公众号、B站、快手、微博、今日头条。
 
 ## 包含的 Skill
 
@@ -13,6 +13,7 @@
 | B站 | `bid-bilibili-platform-rules` | 视频、封面、标题、标签、简介、版权 |
 | 快手 | `bid-kuaishou-platform-rules` | 短视频、直播、电商、商品宣称 |
 | 微博 | `bid-weibo-platform-rules` | 图文、视频、长文、话题、舆情敏感内容 |
+| 今日头条 | `bid-toutiao-platform-rules` | 文章、微头条、视频、小视频、问答、专栏、内容电商 |
 
 ## 安装
 
@@ -44,6 +45,6 @@ Get-ChildItem -Directory $srcRoot | ForEach-Object {
 
 本地已执行：
 
-- 7 个 Skill 均通过 `quick_validate.py`
+- 8 个 Skill 均通过 `quick_validate.py`
 - 抖音媒体检查脚本通过 `python -m py_compile`
-- 7 个平台独立 zip 和整体 zip 已重新生成
+- 8 个平台独立 zip 和整体 zip 已重新生成

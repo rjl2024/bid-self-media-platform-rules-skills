@@ -1,0 +1,7 @@
+interface:
+  display_name: "BID 今日头条平台规则"
+  short_description: "查询头条文章、微头条、视频、问答与内容合规规则"
+  default_prompt: "Use $bid-toutiao-platform-rules to audit my Toutiao article, video, micro-post, headline, cover, and compliance risks."
+
+policy:
+  allow_implicit_invocation: true
