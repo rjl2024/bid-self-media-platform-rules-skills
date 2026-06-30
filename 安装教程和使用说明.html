@@ -1,89 +1,838 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BID 自媒体平台规则 Skill 安装教程和使用说明</title>
   <style>
-    :root { --bg:#f5f7fb; --panel:#fff; --ink:#0e1b2a; --muted:#64748b; --line:#dbe3ef; --blue:#245bff; --blue-soft:#eaf0ff; --green:#0f9f6e; --green-soft:#e8f8f1; --amber:#b86b00; --amber-soft:#fff3d8; --code:#101827; --radius:14px; --shadow:0 18px 48px rgba(15,23,42,.08); }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
-    a { color:var(--blue); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .topbar { position:sticky; top:0; z-index:20; height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 28px; background:rgba(245,247,251,.92); backdrop-filter:blur(18px); border-bottom:1px solid rgba(219,227,239,.82); }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:800; white-space:nowrap; }
-    .brand-mark { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,#101827,#245bff); color:#fff; display:grid; place-items:center; font-size:14px; font-weight:900; }
-    .version { color:var(--muted); font-size:13px; }
-    .layout { display:grid; grid-template-columns:268px minmax(0,1fr) 246px; gap:28px; max-width:1480px; margin:0 auto; padding:28px; }
-    aside { position:sticky; top:88px; align-self:start; max-height:calc(100vh - 104px); overflow:auto; }
-    .side-card,.toc-card { background:rgba(255,255,255,.84); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:0 8px 24px rgba(15,23,42,.04); }
-    .side-title,.toc-title { font-size:13px; font-weight:800; color:var(--muted); margin:0 0 10px; }
-    .nav-list,.toc-list { display:grid; gap:4px; margin:0; padding:0; list-style:none; }
-    .nav-list a,.toc-list a { display:block; padding:8px 10px; border-radius:9px; color:#243244; font-size:14px; }
-    .nav-list a:hover,.toc-list a:hover { background:var(--blue-soft); text-decoration:none; }
-    main { min-width:0; }
-    .hero { background:radial-gradient(circle at 18% 0%,#eaf0ff 0,transparent 36%),radial-gradient(circle at 85% 12%,#eef8f5 0,transparent 30%),var(--panel); border:1px solid var(--line); border-radius:24px; padding:42px; box-shadow:var(--shadow); }
-    .eyebrow { margin:0 0 12px; color:var(--blue); font-weight:800; font-size:14px; }
-    h1 { margin:0; font-size:42px; line-height:1.16; letter-spacing:0; }
-    .lead { max-width:860px; margin:18px 0 0; color:#314155; font-size:18px; }
-    .hero-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:26px; }
-    .metric { background:rgba(255,255,255,.74); border:1px solid var(--line); border-radius:14px; padding:14px; }
-    .metric strong { display:block; font-size:24px; line-height:1.1; }
-    .metric span { display:block; margin-top:4px; color:var(--muted); font-size:13px; }
-    section { margin-top:24px; background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:30px; box-shadow:0 10px 32px rgba(15,23,42,.045); }
-    h2 { margin:0 0 14px; font-size:28px; line-height:1.25; }
-    h3 { margin:24px 0 10px; font-size:19px; }
-    p { margin:10px 0; }
-    .muted { color:var(--muted); }
-    .callout { margin:16px 0; padding:16px 18px; border-radius:14px; border:1px solid var(--line); background:#f8fafc; }
-    .callout strong { display:block; margin-bottom:4px; }
-    .callout.good { background:var(--green-soft); border-color:#bfecd9; }
-    .callout.warn { background:var(--amber-soft); border-color:#ffe0a3; }
-    .grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
-    .card { border:1px solid var(--line); border-radius:14px; padding:18px; background:#fff; }
-    code { font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; background:#edf2fb; color:#10203a; padding:2px 6px; border-radius:6px; font-size:.92em; }
-    pre { margin:14px 0 0; padding:16px 18px; background:var(--code); color:#e8edf8; border-radius:14px; overflow:auto; line-height:1.55; font-size:13px; border:1px solid #1e293b; }
-    pre code { background:transparent; color:inherit; padding:0; border-radius:0; }
-    table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
-    th,td { border:1px solid var(--line); padding:11px 12px; vertical-align:top; text-align:left; }
-    th { background:#f2f6fc; color:#172033; }
-    .steps { counter-reset:step; display:grid; gap:14px; margin:16px 0 0; padding:0; list-style:none; }
-    .step { counter-increment:step; position:relative; padding:16px 18px 16px 58px; border:1px solid var(--line); border-radius:14px; background:#fff; }
-    .step::before { content:counter(step); position:absolute; left:18px; top:18px; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; background:var(--blue); color:#fff; font-size:13px; font-weight:900; }
-    .footer { margin:24px 0 0; color:var(--muted); text-align:center; font-size:13px; }
-    @media (max-width:1180px) { .layout{grid-template-columns:220px minmax(0,1fr);} .right-toc{display:none;} .hero-grid,.grid-3{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media (max-width:780px) { .topbar{padding:0 16px;} .layout{display:block; padding:16px;} aside{position:static; max-height:none; margin-bottom:16px;} .hero{padding:26px;} h1{font-size:32px;} .lead{font-size:16px;} section{padding:22px;} .hero-grid,.grid-3{grid-template-columns:1fr;} }
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #0e1b2a;
+      --muted: #64748b;
+      --line: #dbe3ef;
+      --blue: #245bff;
+      --blue-soft: #eaf0ff;
+      --green: #0f9f6e;
+      --green-soft: #e8f8f1;
+      --amber: #b86b00;
+      --amber-soft: #fff3d8;
+      --red: #c23b3b;
+      --red-soft: #fff0f0;
+      --code: #101827;
+      --radius: 14px;
+      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 28px;
+      background: rgba(245, 247, 251, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(219, 227, 239, 0.82);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #101827, #245bff);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .version { color: var(--muted); font-size: 13px; }
+    .layout {
+      display: grid;
+      grid-template-columns: 268px minmax(0, 1fr) 246px;
+      gap: 28px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    aside {
+      position: sticky;
+      top: 88px;
+      align-self: start;
+      max-height: calc(100vh - 104px);
+      overflow: auto;
+    }
+    .side-card, .toc-card {
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+    .side-title, .toc-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    .nav-list, .toc-list {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .nav-list a, .toc-list a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 9px;
+      color: #243244;
+      font-size: 14px;
+    }
+    .nav-list a:hover, .toc-list a:hover {
+      background: var(--blue-soft);
+      text-decoration: none;
+    }
+    main { min-width: 0; }
+    .hero {
+      background: radial-gradient(circle at 18% 0%, #eaf0ff 0, transparent 36%),
+                  radial-gradient(circle at 85% 12%, #eef8f5 0, transparent 30%),
+                  var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 900px;
+      margin: 18px 0 0;
+      color: #314155;
+      font-size: 18px;
+    }
+    .hero-grid, .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 26px;
+    }
+    .metric {
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    section {
+      margin-top: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 32px rgba(15, 23, 42, 0.045);
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      line-height: 1.25;
+    }
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 19px;
+    }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    .callout {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .callout strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    .callout.info { background: var(--blue-soft); border-color: #cddaff; }
+    .callout.good { background: var(--green-soft); border-color: #bfecd9; }
+    .callout.warn { background: var(--amber-soft); border-color: #ffe0a3; }
+    .callout.danger { background: var(--red-soft); border-color: #ffd0d0; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff;
+    }
+    .card h3 { margin-top: 0; }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      background: #edf2fb;
+      color: #10203a;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+    pre {
+      margin: 14px 0 0;
+      padding: 16px 18px;
+      background: var(--code);
+      color: #e8edf8;
+      border-radius: 14px;
+      overflow: auto;
+      line-height: 1.55;
+      font-size: 13px;
+      border: 1px solid #1e293b;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 11px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #f2f6fc;
+      color: #172033;
+    }
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 14px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .step {
+      counter-increment: step;
+      position: relative;
+      padding: 16px 18px 16px 58px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .platform-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fff;
+      margin-top: 16px;
+    }
+    .platform-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .platform-head h3 { margin: 0; }
+    .small { font-size: 13px; color: var(--muted); }
+    .footer {
+      margin: 24px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 220px minmax(0, 1fr); }
+      .right-toc { display: none; }
+      .hero-grid, .grid-4, .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 780px) {
+      .topbar { padding: 0 16px; }
+      .layout { display: block; padding: 16px; }
+      aside { position: static; max-height: none; margin-bottom: 16px; }
+      .hero { padding: 26px; }
+      h1 { font-size: 32px; }
+      .lead { font-size: 16px; }
+      section { padding: 22px; }
+      .hero-grid, .grid-4, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="brand"><span class="brand-mark">BID</span><span>BID 自媒体平台规则 Skill 交付包</span></div><div class="version">版本 2026-06-30 · 本地安装教程</div></header>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">BID</span>
+      <span>BID 自媒体平台规则 Skill 交付包</span>
+    </div>
+    <div class="version">版本 2026-06-30 · 详细安装与使用手册</div>
+  </header>
+
   <div class="layout">
-    <aside><div class="side-card"><p class="side-title">阅读导航</p><ul class="nav-list"><li><a href="#overview">产品概览</a></li><li><a href="#scope">交付内容</a></li><li><a href="#install">安装步骤</a></li><li><a href="#usage">使用方法</a></li><li><a href="#platforms">平台清单</a></li><li><a href="#qa">常见问题</a></li><li><a href="#check">验收清单</a></li></ul></div></aside>
+    <aside>
+      <div class="side-card">
+        <p class="side-title">阅读导航</p>
+        <ul class="nav-list">
+          <li><a href="#overview">产品概览</a></li>
+          <li><a href="#scope">交付内容</a></li>
+          <li><a href="#before">安装前准备</a></li>
+          <li><a href="#install">安装步骤</a></li>
+          <li><a href="#verify">安装后验证</a></li>
+          <li><a href="#workflow">标准工作流</a></li>
+          <li><a href="#platforms">平台逐项说明</a></li>
+          <li><a href="#prompts">提示词模板</a></li>
+          <li><a href="#update">更新与维护</a></li>
+          <li><a href="#qa">常见问题</a></li>
+          <li><a href="#check">验收清单</a></li>
+        </ul>
+      </div>
+    </aside>
+
     <main>
-      <div class="hero" id="overview"><p class="eyebrow">国内主流自媒体平台发布规则查询与审稿 Skill</p><h1>让 Codex 在做内容前先懂平台规则</h1><p class="lead">这个交付包把抖音、小红书、微信视频号、微信公众号、B站、快手、微博的发布规格、素材建议、内容红线、AIGC 标识、版权和商业合规检查整理成 BID 前缀的可安装 Skill。</p><div class="hero-grid"><div class="metric"><strong>7</strong><span>个平台 Skill</span></div><div class="metric"><strong>BID</strong><span>统一技能前缀</span></div><div class="metric"><strong>7</strong><span>个独立 zip</span></div><div class="metric"><strong>1</strong><span>个整体 GitHub 包</span></div></div></div>
-      <section id="scope"><h2>交付内容</h2><p>根目录是总交付包，每个平台放在自己的下一级资产文件夹里。每个平台文件夹中包含可安装 Skill 文件夹和同名压缩包。</p><table><thead><tr><th>平台资产文件夹</th><th>Skill 名称</th><th>适用内容</th></tr></thead><tbody><tr><td><code>01-bid-douyin-platform-rules</code></td><td><code>bid-douyin-platform-rules</code></td><td>抖音视频、图文、直播、AIGC、OpenAPI/SDK</td></tr><tr><td><code>02-bid-xiaohongshu-platform-rules</code></td><td><code>bid-xiaohongshu-platform-rules</code></td><td>小红书笔记、图文、视频、封面、种草合规</td></tr><tr><td><code>03-bid-wechat-channels-platform-rules</code></td><td><code>bid-wechat-channels-platform-rules</code></td><td>微信视频号视频、图片、直播、微信生态链接</td></tr><tr><td><code>04-bid-wechat-official-account-rules</code></td><td><code>bid-wechat-official-account-rules</code></td><td>公众号文章、封面、素材、群发、转载授权</td></tr><tr><td><code>05-bid-bilibili-platform-rules</code></td><td><code>bid-bilibili-platform-rules</code></td><td>B站视频、封面、标题、标签、简介、版权</td></tr><tr><td><code>06-bid-kuaishou-platform-rules</code></td><td><code>bid-kuaishou-platform-rules</code></td><td>快手短视频、直播、电商、商品宣称</td></tr><tr><td><code>07-bid-weibo-platform-rules</code></td><td><code>bid-weibo-platform-rules</code></td><td>微博图文、视频、长文、话题、舆情敏感内容</td></tr></tbody></table><div class="callout warn"><strong>规则时效提醒</strong>平台后台的上传大小、时长、张数、封面比例等限制会随账号权限和产品版本变化。正式发布前，仍应在对应创作者后台复核一次。</div></section>
-      <section id="install"><h2>安装步骤</h2><ol class="steps"><li class="step"><strong>确认交付包位置</strong><pre><code>I:\闲鱼发布产品库\063005自媒体平台规则skill发布包</code></pre></li><li class="step"><strong>创建本地 Skills 目录</strong><pre><code>$dstRoot = "$env:USERPROFILE\.codex\skills"
-New-Item -ItemType Directory -Force -Path $dstRoot | Out-Null</code></pre></li><li class="step"><strong>一次安装全部平台 Skill</strong><pre><code>$srcRoot = "I:\闲鱼发布产品库\063005自媒体平台规则skill发布包"
+      <div class="hero" id="overview">
+        <p class="eyebrow">国内主流自媒体平台发布规则查询与审稿 Skill</p>
+        <h1>让 Codex 在做内容前先懂平台规则</h1>
+        <p class="lead">
+          这个交付包把抖音、小红书、微信视频号、微信公众号、B站、快手、微博的发布规格、素材建议、内容红线、AIGC 标识、版权和商业合规检查，整理成带 BID 前缀的可安装 Skill。它不是简单的尺寸表，而是一组可被 Codex 调用的“发布前检查员”：做封面、写标题、改图文、导出视频、审客户素材前，先让它按目标平台筛一遍风险。
+        </p>
+        <div class="hero-grid">
+          <div class="metric"><strong>7</strong><span>个平台 Skill</span></div>
+          <div class="metric"><strong>BID</strong><span>统一技能前缀</span></div>
+          <div class="metric"><strong>7</strong><span>个独立 zip</span></div>
+          <div class="metric"><strong>1</strong><span>个完整客户说明</span></div>
+        </div>
+      </div>
+
+      <section id="scope">
+        <h2>交付内容</h2>
+        <p>根目录是总交付包，每个平台放在自己的资产文件夹中。资产文件夹里包含真正可安装的 Skill 文件夹，以及同名的独立压缩包。安装时要复制“里面那层带 SKILL.md 的文件夹”，不要把整个资产文件夹直接放进 Skills 目录。</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>平台资产文件夹</th>
+              <th>可安装 Skill 文件夹</th>
+              <th>主要用途</th>
+              <th>重点风险</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>01-bid-douyin-platform-rules</code></td><td><code>bid-douyin-platform-rules</code></td><td>抖音视频、图文、直播、AIGC、OpenAPI/SDK</td><td>水印、导流、搬运、AIGC 未标识</td></tr>
+            <tr><td><code>02-bid-xiaohongshu-platform-rules</code></td><td><code>bid-xiaohongshu-platform-rules</code></td><td>小红书笔记、图文、视频、封面、种草合规</td><td>虚假种草、功效夸大、广告未披露</td></tr>
+            <tr><td><code>03-bid-wechat-channels-platform-rules</code></td><td><code>bid-wechat-channels-platform-rules</code></td><td>视频号视频、图片、直播、微信生态链接</td><td>私域导流、商品宣称、直播违规</td></tr>
+            <tr><td><code>04-bid-wechat-official-account-rules</code></td><td><code>bid-wechat-official-account-rules</code></td><td>公众号文章、封面、素材、群发、转载授权</td><td>转载授权、图片版权、标题党、外链二维码</td></tr>
+            <tr><td><code>05-bid-bilibili-platform-rules</code></td><td><code>bid-bilibili-platform-rules</code></td><td>B站视频、封面、标题、标签、简介、版权</td><td>素材版权、音乐版权、分区错误、标签不实</td></tr>
+            <tr><td><code>06-bid-kuaishou-platform-rules</code></td><td><code>bid-kuaishou-platform-rules</code></td><td>快手短视频、直播、电商、商品宣称</td><td>直播电商宣称、私下交易、夸大效果</td></tr>
+            <tr><td><code>07-bid-weibo-platform-rules</code></td><td><code>bid-weibo-platform-rules</code></td><td>微博图文、视频、长文、话题、舆情敏感内容</td><td>热点谣言、话题蹭热、隐私名誉、商业披露</td></tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2">
+          <div class="callout info">
+            <strong>每个 Skill 里有什么</strong>
+            <code>SKILL.md</code> 是 Codex 识别技能的入口；<code>references/</code> 里放平台规则和建议；<code>agents/openai.yaml</code> 是界面展示信息。抖音额外带一个 <code>scripts/check_douyin_media.py</code>，可以检查图片/视频文件的尺寸、大小和比例。
+          </div>
+          <div class="callout warn">
+            <strong>规则时效提醒</strong>
+            平台后台的上传大小、时长、张数、封面比例会随账号权限、端版本和功能灰度变化。这个包会给出推荐规格和公开规则入口；正式发布前，仍应进入对应创作者后台复核。
+          </div>
+        </div>
+      </section>
+
+      <section id="before">
+        <h2>安装前准备</h2>
+        <p>如果只是复制 Skill 文件夹，不需要安装复杂依赖。只有在使用抖音媒体检查脚本时，才需要 Python；如果要读取视频时长和编码，建议安装 <code>ffprobe</code>。</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>基础环境</h3>
+            <p>Windows 本地 Codex 客户端或能读取 <code>%USERPROFILE%\.codex\skills</code> 的 Codex 环境。</p>
+            <div class="pill-row"><span class="pill">必须</span><span class="pill">本地 Skills 目录</span></div>
+          </div>
+          <div class="card">
+            <h3>Python</h3>
+            <p>仅用于运行抖音媒体检查脚本。没有 Python 也不影响 Skill 的规则查询和审稿功能。</p>
+            <div class="pill-row"><span class="pill">可选</span><span class="pill">脚本检查</span></div>
+          </div>
+          <div class="card">
+            <h3>GitHub 包</h3>
+            <p>公开仓库可作为云端备份或给客户下载：<code>rjl2024/bid-self-media-platform-rules-skills</code>。</p>
+            <div class="pill-row"><span class="pill">可选</span><span class="pill">远程下载</span></div>
+          </div>
+        </div>
+
+        <h3>确认本机 Skills 目录</h3>
+        <pre><code>$dstRoot = "$env:USERPROFILE\.codex\skills"
+New-Item -ItemType Directory -Force -Path $dstRoot | Out-Null
+explorer $dstRoot</code></pre>
+
+        <h3>确认 Python 是否可用</h3>
+        <pre><code>py -3 --version
+python --version</code></pre>
+        <p class="muted">两条命令有一条能显示版本即可。若都不可用，只是不能运行媒体检查脚本，不影响安装 Skill。</p>
+      </section>
+
+      <section id="install">
+        <h2>安装步骤</h2>
+        <p>下面给三种安装方式。最推荐“方式 A：一次安装全部平台”，适合客户拿到完整包后直接使用。</p>
+
+        <h3>方式 A：一次安装全部平台 Skill</h3>
+        <ol class="steps">
+          <li class="step">
+            <strong>确认交付包位置</strong>
+            <p>本地交付包默认路径如下。如果你把文件夹移动到了别处，只需要改第一行 <code>$srcRoot</code>。</p>
+            <pre><code>$srcRoot = "I:\闲鱼发布产品库\063005自媒体平台规则skill发布包"</code></pre>
+          </li>
+          <li class="step">
+            <strong>复制全部可安装 Skill</strong>
+            <p>这段命令会自动找到每个平台资产文件夹里真正带 <code>SKILL.md</code> 的子目录，并复制到本机 Skills 目录。如果本机已有同名 Skill，会先备份旧版本。</p>
+            <pre><code>$srcRoot = "I:\闲鱼发布产品库\063005自媒体平台规则skill发布包"
 $dstRoot = "$env:USERPROFILE\.codex\skills"
+
+New-Item -ItemType Directory -Force -Path $dstRoot | Out-Null
+
 Get-ChildItem -Directory $srcRoot | ForEach-Object {
-  Get-ChildItem -Directory $_.FullName | Where-Object { Test-Path (Join-Path $_.FullName "SKILL.md") } | ForEach-Object {
+  Get-ChildItem -Directory $_.FullName | Where-Object {
+    Test-Path (Join-Path $_.FullName "SKILL.md")
+  } | ForEach-Object {
     $dst = Join-Path $dstRoot $_.Name
-    if (Test-Path $dst) { Rename-Item $dst "$($_.Name)-backup-$(Get-Date -Format yyyyMMddHHmmss)" }
+    if (Test-Path $dst) {
+      Rename-Item $dst "$($_.Name)-backup-$(Get-Date -Format yyyyMMddHHmmss)"
+    }
     Copy-Item $_.FullName $dst -Recurse
   }
-}</code></pre></li><li class="step"><strong>重启客户端</strong><p>复制完成后重启 Codex，让它重新扫描技能目录。之后可直接用 <code>$bid-douyin-platform-rules</code>、<code>$bid-xiaohongshu-platform-rules</code> 等名称调用。</p></li></ol></section>
-      <section id="usage"><h2>使用方法</h2><div class="grid-3"><div class="card"><h3>发布前审稿</h3><p>检查标题、封面、正文、视频信息和潜在违规点。</p></div><div class="card"><h3>素材导出建议</h3><p>按目标平台给出封面、图片、视频推荐尺寸。</p></div><div class="card"><h3>跨平台改稿</h3><p>把内容改成另一个平台更合适的标题、图文和风险提示。</p></div></div><h3>推荐调用提示词</h3><pre><code>请使用 $bid-douyin-platform-rules，检查这个短视频发布到抖音是否合规。
-重点看：视频比例、封面尺寸、标题话术、水印、站外导流、AIGC 标识、版权风险。
-请分成“必须修改”“建议优化”“需要后台复核”三类输出。</code></pre><pre><code>请使用 $bid-xiaohongshu-platform-rules，把这篇内容改成小红书笔记。
-要求：给出封面尺寸建议、标题备选、正文结构、标签建议，并标出种草/广告/功效宣称风险。</code></pre><pre><code>请使用 $bid-wechat-official-account-rules，审查这篇公众号文章。
-重点看：封面比例、标题党风险、转载/图片版权、外链二维码、医疗金融教育敏感表述。</code></pre></section>
-      <section id="platforms"><h2>平台使用建议</h2><table><thead><tr><th>平台</th><th>默认素材建议</th><th>最常见风险</th></tr></thead><tbody><tr><td>抖音</td><td>视频 1080x1920；图文封面 1080x1440 或 1080x1920</td><td>其他平台水印、站外导流、搬运、AIGC 未标识</td></tr><tr><td>小红书</td><td>图文 1080x1440、1080x1350；视频 1080x1920</td><td>虚假种草、功效夸大、广告未披露、私信导流</td></tr><tr><td>视频号</td><td>视频 1080x1920；横屏 1920x1080</td><td>外链/私域导流、商品宣称、直播场景违规</td></tr><tr><td>公众号</td><td>封面 900x383；正文图片 900-1080 宽</td><td>转载授权、图片版权、标题党、二维码外链</td></tr><tr><td>B站</td><td>视频 1920x1080；封面 1920x1080 或 1280x720</td><td>素材版权、音乐版权、分区错误、标题/标签不实</td></tr><tr><td>快手</td><td>视频 1080x1920；封面 1080x1920 或 1080x1440</td><td>直播/电商宣称、私下交易、夸大产品效果</td></tr><tr><td>微博</td><td>图文 1080x1080/1350/1440；视频 1080x1920 或 1920x1080</td><td>热点谣言、话题蹭热、隐私名誉、未披露商业合作</td></tr></tbody></table></section>
-      <section id="qa"><h2>常见问题</h2><h3>为什么有些平台没有写死上传大小和时长？</h3><p>这些限制经常在创作者后台按账号权限、端版本、功能灰度变化。Skill 会保留推荐规格和官方入口，对不稳定字段要求后台复核。</p><h3>zip 怎么用？</h3><p>zip 是方便分发的安装包。实际安装时解压后，把里面的同名 Skill 文件夹复制到 <code>%USERPROFILE%\.codex\skills</code>。</p></section>
-      <section id="check"><h2>验收清单</h2><div class="callout good"><strong>校验结果</strong>所有平台 Skill 均通过 <code>quick_validate.py</code> 标准校验；每个平台均有独立 <code>*-skill.zip</code>。</div></section>
+}</code></pre>
+          </li>
+          <li class="step">
+            <strong>重启 Codex 客户端</strong>
+            <p>复制完成后关闭并重新打开 Codex，让它重新扫描 Skills 目录。重启后即可在对话里点名调用，例如 <code>$bid-douyin-platform-rules</code>。</p>
+          </li>
+        </ol>
+
+        <h3>方式 B：只安装某一个平台</h3>
+        <p>如果客户只需要一个平台，比如只需要小红书规则，可以只复制对应 Skill。</p>
+        <pre><code>$src = "I:\闲鱼发布产品库\063005自媒体平台规则skill发布包\02-bid-xiaohongshu-platform-rules\bid-xiaohongshu-platform-rules"
+$dst = "$env:USERPROFILE\.codex\skills\bid-xiaohongshu-platform-rules"
+
+if (Test-Path $dst) {
+  Rename-Item $dst "bid-xiaohongshu-platform-rules-backup-$(Get-Date -Format yyyyMMddHHmmss)"
+}
+Copy-Item $src $dst -Recurse</code></pre>
+
+        <h3>方式 C：从 GitHub 下载后安装</h3>
+        <p>如果使用公开仓库版本，先下载或克隆仓库，再按方式 A 复制 Skill 文件夹。</p>
+        <pre><code>git clone https://github.com/rjl2024/bid-self-media-platform-rules-skills.git
+cd bid-self-media-platform-rules-skills</code></pre>
+        <p>如果客户不熟悉 Git，也可以打开仓库页面下载 zip，解压后把里面的 Skill 子目录复制到 <code>%USERPROFILE%\.codex\skills</code>。</p>
+
+        <div class="callout danger">
+          <strong>常见安装错误</strong>
+          不要把 <code>01-bid-douyin-platform-rules</code> 这一层复制到 Skills 目录后就结束。真正的 Skill 是它里面的 <code>bid-douyin-platform-rules</code>。正确结构应是 <code>C:\Users\你的用户名\.codex\skills\bid-douyin-platform-rules\SKILL.md</code>。
+        </div>
+      </section>
+
+      <section id="verify">
+        <h2>安装后验证</h2>
+        <p>安装后先做一个不涉及真实发布的安全测试。测试目标不是让 Codex 生成内容，而是确认 Skill 能被识别、能读取 reference、能按平台输出规则和风险项。</p>
+
+        <h3>第一条测试指令</h3>
+        <pre><code>请使用 $bid-douyin-platform-rules，告诉我抖音短视频发布前要检查哪些项目。
+只输出检查清单，不要生成具体内容。</code></pre>
+
+        <h3>期望输出</h3>
+        <table>
+          <thead>
+            <tr><th>看到什么</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>回答里提到视频比例、封面、大小/时长、标题、水印、导流、AIGC、版权</td><td>Skill 已经按抖音规则工作。</td></tr>
+            <tr><td>回答里主动区分“硬性限制”和“需要后台复核”</td><td>说明 reference 中的不稳定规则提醒被正确使用。</td></tr>
+            <tr><td>回答完全泛泛而谈，没有平台差异</td><td>可能没有触发 Skill，检查安装路径或重启客户端。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>检查本地文件结构</h3>
+        <pre><code>Get-ChildItem "$env:USERPROFILE\.codex\skills" -Directory |
+  Where-Object { $_.Name -like "bid-*-platform-rules" -or $_.Name -like "bid-wechat-official-account-rules" } |
+  Select-Object Name,FullName</code></pre>
+      </section>
+
+      <section id="workflow">
+        <h2>标准工作流</h2>
+        <p>建议把这些 Skill 用在“发布前”和“交付前”，而不是发布后补救。最稳的流程是先定平台，再做素材规格，再审内容风险，最后才进入真实后台发布。</p>
+
+        <ol class="steps">
+          <li class="step">
+            <strong>确定目标平台和发布形态</strong>
+            <p>先明确是抖音短视频、小红书图文、公众号文章、B站视频，还是快手直播电商。不同形态的尺寸、风险、标题策略完全不同。</p>
+          </li>
+          <li class="step">
+            <strong>让 Codex 调用对应 Skill 给出规格</strong>
+            <p>让 Codex 输出推荐尺寸、硬性限制、需要后台复核的字段。不要只问“尺寸是多少”，要让它给出“发布前检查清单”。</p>
+          </li>
+          <li class="step">
+            <strong>制作或调整素材</strong>
+            <p>按推荐尺寸导出视频、封面、图文长图。涉及多平台分发时，不要用一套图硬发所有平台，至少为抖音、小红书、公众号、B站各准备适合的封面比例。</p>
+          </li>
+          <li class="step">
+            <strong>做合规审稿</strong>
+            <p>让 Codex 检查标题党、虚假夸大、广告未披露、站外导流、版权、AIGC、敏感垂类。输出时分成“必须改”“建议改”“后台复核”。</p>
+          </li>
+          <li class="step">
+            <strong>进入平台后台复核</strong>
+            <p>对大小、时长、张数、封面裁切、直播封面、商品链接、长文入口等账号相关字段，以创作者后台实时提示为准。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="platforms">
+        <h2>平台逐项说明</h2>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>抖音：短视频、图文、直播、AIGC</h3>
+            <span class="small"><code>$bid-douyin-platform-rules</code></span>
+          </div>
+          <p>适合在做短视频导出、抖音图文、直播封面、AIGC 视频、矩阵分发前调用。抖音 Skill 对“发布路径”特别敏感：App 手动发布、创作服务平台、OpenAPI、OpenSDK/H5 分享的限制并不完全一样。</p>
+          <table>
+            <tr><th>推荐素材</th><td>竖屏视频 1080x1920；横屏视频 1920x1080；图文封面 1080x1440、1080x1920 或 1080x1080。</td></tr>
+            <tr><th>重点检查</th><td>其他平台水印、站外导流、二维码、搬运痕迹、未授权音乐/素材、虚假效果、AIGC 未标识。</td></tr>
+            <tr><th>后台复核</th><td>视频大小与时长、图文张数、长文入口、直播封面比例、电商/生活服务挂载权限。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-douyin-platform-rules，审查这个抖音短视频发布方案。
+内容类型：知识口播视频
+素材：1080x1920 竖屏视频、封面一张、标题 3 个备选
+请检查：视频规格、封面安全区、标题风险、水印、导流、AIGC、版权，并输出必须修改项。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>小红书：笔记、图文、种草合规</h3>
+            <span class="small"><code>$bid-xiaohongshu-platform-rules</code></span>
+          </div>
+          <p>适合做小红书封面、图文笔记、种草文案、教程型笔记、合集型笔记。小红书更关注“真实体验”和“营销披露”，标题和正文不能只追求强转化。</p>
+          <table>
+            <tr><th>推荐素材</th><td>封面 1080x1440 或 1080x1350；方图 1080x1080；视频 1080x1920。</td></tr>
+            <tr><th>重点检查</th><td>虚假种草、广告未披露、功效夸大、前后对比误导、私信/微信导流、医疗美容和健康产品宣称。</td></tr>
+            <tr><th>后台复核</th><td>图片张数、单图大小、视频大小与时长、账号是否有商业合作或店铺能力。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-xiaohongshu-platform-rules，把这篇内容改成小红书笔记。
+要求：给 5 个标题、1 个封面文案、正文结构、标签建议。
+另外标出种草、广告、功效宣称、私域导流风险。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>微信视频号：视频、直播、微信生态链接</h3>
+            <span class="small"><code>$bid-wechat-channels-platform-rules</code></span>
+          </div>
+          <p>适合做视频号短视频、直播预告、直播封面、商品或小程序挂载内容。视频号处于微信生态内，尤其要注意外链、私域、商品链接和直播场景的边界。</p>
+          <table>
+            <tr><th>推荐素材</th><td>竖屏视频 1080x1920；横屏视频 1920x1080；封面优先做中心安全区。</td></tr>
+            <tr><th>重点检查</th><td>外链导流、私下交易、商品效果夸大、直播口播风险、未授权素材、AIGC 未说明。</td></tr>
+            <tr><th>后台复核</th><td>视频号助手里的大小、时长、封面裁切、直播封面、商品/小程序挂载权限。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-wechat-channels-platform-rules，检查这个视频号直播预告。
+请重点看：封面比例、标题、直播主题、商品链接、导流话术、AIGC 和版权风险。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>微信公众号：文章、封面、转载、素材</h3>
+            <span class="small"><code>$bid-wechat-official-account-rules</code></span>
+          </div>
+          <p>适合公众号文章发布前审稿、封面图建议、标题党检查、素材版权检查、转载授权检查。公众号文章要特别关注外链、二维码、转载授权和敏感行业表述。</p>
+          <table>
+            <tr><th>推荐素材</th><td>主封面常用 900x383，同时准备方形裁切；正文图片宽度建议 900-1080 像素。</td></tr>
+            <tr><th>重点检查</th><td>标题党、转载授权、图片版权、二维码外链、医疗金融教育表述、虚假数据和专家背书。</td></tr>
+            <tr><th>后台复核</th><td>标题长度、摘要长度、封面裁切、外链权限、原创/转载/付费内容能力。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-wechat-official-account-rules，审查这篇公众号文章。
+请分成：标题风险、封面风险、正文合规风险、引用/转载/图片版权风险、发布前后台复核项。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>B站：视频、封面、标题、标签</h3>
+            <span class="small"><code>$bid-bilibili-platform-rules</code></span>
+          </div>
+          <p>适合教程视频、知识视频、评测视频、合集视频投稿前检查。B站更重视分区、标题、标签、简介和素材授权，尤其要避免搬运、盗用片段和音乐版权问题。</p>
+          <table>
+            <tr><th>推荐素材</th><td>横屏视频 1920x1080；竖屏视频 1080x1920；封面 1920x1080 或 1280x720。</td></tr>
+            <tr><th>重点检查</th><td>分区错误、标题误导、标签不实、未授权音乐/视频片段、字幕来源、转载声明。</td></tr>
+            <tr><th>后台复核</th><td>上传大小、时长、编码、帧率、HDR、互动视频、字幕和封面裁切。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-bilibili-platform-rules，检查这个 B站投稿方案。
+请输出：推荐分区、标题风险、标签建议、简介要补充的授权说明、封面风险、后台复核项。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>快手：短视频、直播、电商</h3>
+            <span class="small"><code>$bid-kuaishou-platform-rules</code></span>
+          </div>
+          <p>适合快手短视频、直播间预告、电商口播、商品卡片内容发布前检查。快手的直播和电商内容要更关注商品宣称、价格承诺、售后承诺和私下交易。</p>
+          <table>
+            <tr><th>推荐素材</th><td>竖屏视频 1080x1920；横屏视频 1920x1080；封面 1080x1920 或 1080x1440。</td></tr>
+            <tr><th>重点检查</th><td>商品功效夸大、私下交易、二维码导流、直播间话术、虚假价格、健康/食品/美妆宣称。</td></tr>
+            <tr><th>后台复核</th><td>直播封面、标题长度、视频大小与时长、电商类目规则、挂车和本地生活权限。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-kuaishou-platform-rules，审查这段快手直播电商口播。
+请重点看：商品宣称、价格承诺、售后承诺、私下交易、导流、敏感类目和必须删改话术。</code></pre>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-head">
+            <h3>微博：图文、视频、长文、话题</h3>
+            <span class="small"><code>$bid-weibo-platform-rules</code></span>
+          </div>
+          <p>适合热点内容、品牌传播、图文长文、活动话题发布前检查。微博的风险经常来自话题、公共事件、隐私名誉、商业披露和未经核实的信息。</p>
+          <table>
+            <tr><th>推荐素材</th><td>单图 1080x1440、1080x1350 或 1080x1080；竖屏视频 1080x1920；横屏视频 1920x1080。</td></tr>
+            <tr><th>重点检查</th><td>热点谣言、话题蹭热、隐私泄露、名誉侵权、未披露商业合作、截图和素材版权。</td></tr>
+            <tr><th>后台复核</th><td>视频大小与时长、GIF 支持、长文编辑器、话题/超话规则、商业推广权限。</td></tr>
+          </table>
+          <pre><code>请使用 $bid-weibo-platform-rules，审查这条微博文案。
+请重点看：话题是否匹配、是否有未经证实的信息、是否侵犯隐私名誉、是否需要商业合作披露。</code></pre>
+        </div>
+      </section>
+
+      <section id="prompts">
+        <h2>提示词模板</h2>
+        <p>下面这些模板可以直接复制给 Codex。使用时把平台名、素材路径、内容主题、发布目标换成自己的即可。</p>
+
+        <h3>模板 1：发布前总审稿</h3>
+        <pre><code>请使用 $bid-douyin-platform-rules，帮我做发布前审稿。
+平台：抖音
+内容类型：短视频
+素材路径：这里填本地素材路径
+发布目标：引导用户了解某个服务，但不做强销售
+
+请按下面结构输出：
+1. 素材规格检查
+2. 标题和封面风险
+3. 内容合规风险
+4. 版权和授权风险
+5. AIGC 标识风险
+6. 必须修改项
+7. 建议优化项
+8. 需要进入后台复核的项目</code></pre>
+
+        <h3>模板 2：跨平台改稿</h3>
+        <pre><code>请把这篇内容分别改成抖音、小红书、公众号三个平台版本。
+请分别调用：
+$bid-douyin-platform-rules
+$bid-xiaohongshu-platform-rules
+$bid-wechat-official-account-rules
+
+输出要求：
+1. 每个平台 3 个标题
+2. 每个平台封面尺寸建议
+3. 每个平台正文结构
+4. 每个平台发布风险
+5. 哪些内容不能跨平台直接复用</code></pre>
+
+        <h3>模板 3：封面和尺寸建议</h3>
+        <pre><code>请使用对应平台规则 Skill，为这组素材给出导出尺寸方案。
+目标平台：小红书、抖音、B站、公众号
+素材类型：封面图、长图、横屏视频、竖屏视频
+
+请输出表格：
+平台 / 内容类型 / 推荐尺寸 / 安全区建议 / 不建议做法 / 后台复核项</code></pre>
+
+        <h3>模板 4：商业内容风控</h3>
+        <pre><code>请使用 $bid-xiaohongshu-platform-rules，检查这篇商业种草内容。
+重点检查：
+1. 是否有广告未披露风险
+2. 是否有功效夸大或绝对化用语
+3. 是否有医疗、金融、教育、招聘等敏感垂类风险
+4. 是否有私信、微信、二维码、站外交易导流风险
+5. 给出可替换的安全表达</code></pre>
+
+        <h3>模板 5：客户交付前验收</h3>
+        <pre><code>请使用对应平台规则 Skill，对这一批交付素材做最终验收。
+素材包括：标题、封面图、正文、视频、发布说明
+目标平台：这里填平台
+
+请输出：
+1. 是否可交付
+2. 必须返工项
+3. 客户发布前要自己确认的后台项
+4. 不能承诺为“平台一定通过”的原因
+5. 给客户的简短发布提醒</code></pre>
+      </section>
+
+      <section id="update">
+        <h2>更新与维护</h2>
+        <p>平台规则会变，所以这个包的正确用法不是“一次写死永远不改”，而是把它当作规则底座。后续发现新规则时，优先更新对应平台的 <code>references/*.md</code>，再重新压缩打包。</p>
+
+        <h3>本地更新流程</h3>
+        <ol class="steps">
+          <li class="step"><strong>找到平台 reference</strong><p>例如抖音规则在 <code>01-bid-douyin-platform-rules\bid-douyin-platform-rules\references\douyin.md</code>。</p></li>
+          <li class="step"><strong>补充新规则和来源</strong><p>把新规则写成“硬规则、建议规格、待后台复核”三类，不要把灰度功能当成稳定规则。</p></li>
+          <li class="step"><strong>重新校验 Skill</strong><pre><code>python "C:\Users\rjl20\.codex\skills\.system\skill-creator\scripts\quick_validate.py" "平台Skill文件夹路径"</code></pre></li>
+          <li class="step"><strong>重新压缩</strong><p>更新后重新生成平台独立 zip 和总 zip，确保客户拿到的是最新版本。</p></li>
+        </ol>
+
+        <h3>公开仓库</h3>
+        <p>当前公开仓库地址：</p>
+        <pre><code>https://github.com/rjl2024/bid-self-media-platform-rules-skills</code></pre>
+      </section>
+
+      <section id="qa">
+        <h2>常见问题</h2>
+
+        <h3>1. 安装后 Codex 没有触发 Skill</h3>
+        <p>先检查路径是否是 <code>%USERPROFILE%\.codex\skills\bid-douyin-platform-rules\SKILL.md</code> 这种结构。如果多套了一层资产目录，Codex 可能扫描不到。复制正确后重启客户端。</p>
+
+        <h3>2. 为什么不直接写死所有平台上传大小和时长？</h3>
+        <p>因为很多上传限制和账号权限、版本灰度有关，公开文档也不总是完整同步。这个包会给出推荐规格和公开来源，但把不稳定字段标成“需后台复核”，这是为了避免客户把经验值误当成官方承诺。</p>
+
+        <h3>3. 这些 Skill 能保证内容一定审核通过吗？</h3>
+        <p>不能。它们能帮助提前发现明显风险，减少返工和违规概率，但平台审核受账号状态、内容上下文、实时规则、投诉举报、人工复核等因素影响，不能承诺一定通过。</p>
+
+        <h3>4. zip 文件怎么用？</h3>
+        <p>zip 是方便分发的安装包。实际安装时解压后，把里面的同名 Skill 文件夹复制到 <code>%USERPROFILE%\.codex\skills</code>。如果你已经拿到未压缩文件夹，直接复制文件夹即可。</p>
+
+        <h3>5. 抖音媒体检查脚本报错怎么办？</h3>
+        <p>如果提示找不到 Python，先安装 Python。图片尺寸检查需要 Pillow，视频时长和编码检查需要 ffprobe。没有这些依赖时，仍可让 Codex 根据规则文本做人工审稿。</p>
+        <pre><code>py -3 -m pip install pillow
+winget install Gyan.FFmpeg</code></pre>
+
+        <h3>6. 如何给客户解释“后台复核项”？</h3>
+        <p>可以这样说：平台上传限制会跟账号权限和产品版本有关，我们已经按公开规则和经验给出建议，但最终发布前仍需要以你账号后台当时显示的限制为准。</p>
+      </section>
+
+      <section id="check">
+        <h2>验收清单</h2>
+        <div class="grid-2">
+          <div class="callout good">
+            <strong>目录结构</strong>
+            7 个平台均已使用 BID 前缀，根目录保留统一安装教程，每个平台有独立资产文件夹和可安装 Skill 文件夹。
+          </div>
+          <div class="callout good">
+            <strong>Skill 标准</strong>
+            每个 Skill 都包含 <code>SKILL.md</code>、<code>references/</code>、<code>agents/openai.yaml</code>；抖音额外包含媒体检查脚本。
+          </div>
+          <div class="callout good">
+            <strong>客户使用</strong>
+            文档包含安装前准备、完整安装命令、单平台安装、安装后测试、平台逐项说明、提示词模板、维护方式。
+          </div>
+          <div class="callout good">
+            <strong>交付边界</strong>
+            文档明确说明平台规则会变化、后台字段需复核、Skill 不能保证审核一定通过。
+          </div>
+        </div>
+        <div class="callout info">
+          <strong>建议客户第一条实际使用指令</strong>
+          “请使用 $bid-douyin-platform-rules，帮我检查这个抖音短视频发布方案，按必须修改、建议优化、后台复核三类输出。”
+        </div>
+      </section>
+
       <p class="footer">本说明文件放在交付包根目录，可离线打开。最后整理时间：2026-06-30。</p>
     </main>
-    <aside class="right-toc"><div class="toc-card"><p class="toc-title">快速定位</p><ul class="toc-list"><li><a href="#overview">这是什么</a></li><li><a href="#install">安装命令</a></li><li><a href="#usage">提示词示例</a></li><li><a href="#platforms">平台建议</a></li></ul></div></aside>
+
+    <aside class="right-toc">
+      <div class="toc-card">
+        <p class="toc-title">快速定位</p>
+        <ul class="toc-list">
+          <li><a href="#install">安装命令</a></li>
+          <li><a href="#verify">安装验证</a></li>
+          <li><a href="#workflow">工作流</a></li>
+          <li><a href="#platforms">平台说明</a></li>
+          <li><a href="#prompts">提示词</a></li>
+          <li><a href="#qa">问题排查</a></li>
+        </ul>
+      </div>
+    </aside>
   </div>
 </body>
 </html>
-
